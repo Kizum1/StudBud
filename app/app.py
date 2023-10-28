@@ -278,8 +278,25 @@ def display_data_tables():
 
     )
 
+def home():
+    """Home page"""
+    return rx.vstack(
+            rx.heading("StudBud", font_size="120px", class_name="text-4xl font-extrabold tracking-tight text-gray-900 font-display sm:text-5xl md:text-6xl xl:text-7xl"),
+            rx.heading("Find your next study buddy!", color="teal", class_name="text-4xl font-extrabold tracking-tight text-gray-900 font-display sm:text-5xl md:text-6xl xl:text-7xl block text-cool-indigo-600"),
+            rx.text("Already ### Users Signed Up!", class_name="max-w-md mx-auto mt-3 text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl"),
+            rx.button('Sign Up', color_scheme='teal'),
+        )
+    
+
+
+app = rx.App(state=State, admin_dash=rx.AdminDash(models=[StudBudUser]))
+app.add_page(user_page, "/users")
+app.add_page(uni_page, "/uni")
+app.add_page(home, "/")
+
 
 app = rx.App(state=State, admin_dash=rx.AdminDash(models=[StudBudUser]))
 app.add_page(user_page, "/users")
 app.add_page(display_data_tables, "/uni")
+       
 app.compile()
