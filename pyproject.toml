@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "studbud"
+version = "0.0.1"
+description = "Tinder for study groups"
+authors = ["Jaeyoon Chong, Sebastian Silva, Rafa Mojica, Robin Simpson"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+reflex = "^0.3.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
