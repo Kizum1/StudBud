@@ -1,62 +1,39 @@
 import reflex as rx
-from .models import StudBudUser
+from .models import StudBudUser  # Ensure that the path to your models is correct
+import pandas as pd
 
 class State(rx.State):
     """The app state."""
-
-    name: str = ""
-    email: str = ""
-    age: int = 0
-    gender: str = "Other"
-    school: str = ""
-    major: str = ""
     users: list[StudBudUser] = []
-
-    def add_user(self):
-        """Add a StudBudUser to the database."""
-        with rx.session() as session:
-            if session.query(StudBudUser).filter_by(email=self.email).first():
-                return rx.window_alert("User already exists")
-            session.add(
-                StudBudUser(
-                    name=self.name,
-                    email=self.email,
-                    age=self.age,
-                    gender=self.gender,
-                    school=self.school,
-                    major=self.major,
-                )
-            )
-            session.commit()
-        return rx.window_alert(f"User {self.name} has been added.")
-    
-
-    def user_page(self):
-        """The user page."""
-        return rx.redirect("/")
-
-    def add_user_page(self):
-        """The add user page."""
-        return rx.redirect("/add_user")
-
-    def delete_user(self, email: str):
-        """Delete a StudBudUser from the database."""
-        with rx.session() as session:
-            user_to_delete = session.query(StudBudUser).filter_by(email=email['email']).first()
-            if user_to_delete:
-                session.delete(user_to_delete)
-                session.commit()
-                return rx.window_alert(f"User with email {email} has been deleted.")
-            else:
-                return rx.window_alert(f"No user found with email {email}.")
-
-
 
     @rx.var
     def get_users(self) -> list[StudBudUser]:
         """Get all users from the database."""
         with rx.session() as session:
-            return session.query(StudBudUser).all()
+            self.users = session.query(StudBudUser).all()
+            return self.users
+
+
+def user_page():
+    """Show a page with a table of users."""
+    return rx.table_container(
+        rx.table(
+            rx.thead(
+                rx.tr(
+                    rx.th("Name"),
+                    rx.th("Email"),
+                    rx.th("Age"),
+                    rx.th("Gender"),
+                    rx.th("School"),
+                    rx.th("Major"),
+                )
+            ),
+            rx.tbody(rx.foreach(State.get_users, show_user)),
+        ),
+        bg="#F7FAFC ",
+        border="1px solid #ddd",
+        border_radius="25px",
+    )
 
 
 def show_user(user: StudBudUser):
@@ -68,66 +45,29 @@ def show_user(user: StudBudUser):
         rx.td(user.gender),
         rx.td(user.school),
         rx.td(user.major),
-        rx.td(
-            rx.button(
-                "Delete",
-                on_click=lambda: State.delete_user(user),
-                bg="red",
-                color="white",
-            )
-        ),
     )
 
 
-def add_user():
-    """Add a StudBudUser to the database."""
-    return rx.center(
-        rx.vstack(
-            rx.heading("Add StudBud User"),
-            rx.input(placeholder="Name", on_blur=State.set_name),
-            rx.input(placeholder="Email", on_blur=State.set_email),
-            rx.input(placeholder="Age", on_blur=State.set_age),
-            rx.select(["Male", "Female", "Other"], placeholder="Gender", on_change=State.set_gender),
-            rx.input(placeholder="School", on_blur=State.set_school),
-            rx.input(placeholder="Major", on_blur=State.set_major),
-            rx.button("Submit User", on_click=State.add_user),
+def uni_page():
+    uni_data = pd.read_csv("app/universities.csv")
+
+    return rx.vstack(
+        rx.data_table(
+            data=uni_data[["Rank", "University"]],
+            pagination=True,
+            search=True,
+            sort=True,
         ),
-        padding="1em",
+        rx.heading("Settings", font_size="3em"),
+        rx.text("Welcome to Reflex!"),
+        rx.text(
+            "You can edit this page in ",
+            rx.code("{your_app}/pages/settings.py"),
+        )
     )
 
-
-def index():
-    """The main page."""
-    return rx.center(
-        rx.vstack(
-            rx.heading("StudBud Users"),
-            rx.button("Add User", on_click=State.add_user_page, bg="blue", color="white"),
-            rx.table_container(
-                rx.table(
-                    rx.thead(
-                        rx.tr(
-                            rx.th("Name"),
-                            rx.th("Email"),
-                            rx.th("Age"),
-                            rx.th("Gender"),
-                            rx.th("School"),
-                            rx.th("Major"),
-                            rx.th("Delete"),
-                        )
-                    ),
-                    rx.tbody(rx.foreach(State.get_users, show_user)),
-                ),
-                bg="#F7FAFC ",
-                border="1px solid #ddd",
-                border_radius="25px",
-            ),
-        ),
-        padding="1em",
-    )
-
-
-# Add state and page to the app.
 app = rx.App(state=State, admin_dash=rx.AdminDash(models=[StudBudUser]))
-app.add_page(index)
-app.add_page(add_user, "/add_user")
+app.add_page(user_page, "/users")
+app.add_page(uni_page, "/uni")
+
 app.compile()

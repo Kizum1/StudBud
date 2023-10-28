@@ -6,8 +6,9 @@ authors = ["Jaeyoon Chong, Sebastian Silva, Rafa Mojica, Robin Simpson"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = ">=3.10,<3.13"
 reflex = "^0.3.1"
+pandas = "^2.1.2"
 
 
 [build-system]
