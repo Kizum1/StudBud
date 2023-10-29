@@ -69,7 +69,7 @@ def navbar_item(text: str, icon: str, url: str) -> rx.Component:
                 box_shadow=styles.box_shadow,
                 width="100%",
                 padding_x="1em",
-                align="center",
+                align="center", 
                 justify="center",
             ),
             rx.flex(
