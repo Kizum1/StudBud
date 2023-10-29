@@ -4,7 +4,7 @@ import { Event, getAllLocalStorageItems, getRefValue, getRefValues, isTrue, prev
 import { ColorModeContext, EventLoopContext, initialEvents, StateContext } from "/utils/context.js"
 import "focus-visible/dist/focus-visible"
 import "katex/dist/katex.min.css"
-import { Box, Center, Code, Heading, HStack, Image, Link, ListItem, Menu, MenuButton, MenuDivider, MenuItem, MenuList, Modal, ModalBody, ModalContent, ModalHeader, ModalOverlay, OrderedList, Spacer, Text, UnorderedList, VStack } from "@chakra-ui/react"
+import { Box, Code, Flex, Heading, HStack, Image, Link, ListItem, Menu, MenuButton, MenuDivider, MenuItem, MenuList, Modal, ModalBody, ModalContent, ModalHeader, ModalOverlay, OrderedList, Spacer, Text, UnorderedList } from "@chakra-ui/react"
 import { getEventURL } from "/utils/state.js"
 import NextLink from "next/link"
 import ReactMarkdown from "react-markdown"
@@ -72,60 +72,49 @@ export default function Component() {
   <Fragment/>
 )}
 </Fragment>
-  <HStack alignItems={`flex-start`} sx={{"transition": "left 0.5s, width 0.5s", "position": "relative"}}>
-  <Box sx={{"display": ["none", "none", "block"], "minWidth": "20em", "height": "100%", "position": "sticky", "top": "0px", "borderRight": "1px solid #F4F3F6"}}>
-  <VStack sx={{"height": "100dvh"}}>
-  <HStack sx={{"width": "100%", "borderBottom": "1px solid #F4F3F6", "padding": "1em"}}>
-  <Image src={`/icon.svg`} sx={{"height": "2em"}}/>
-  <Spacer/>
-  <Link as={NextLink} href={`https://github.com/reflex-dev/reflex`}>
-  <Center sx={{"boxShadow": "0px 0px 0px 1px rgba(84, 82, 95, 0.14)", "bg": "transparent", "borderRadius": "0.375rem", "_hover": {"bg": "#F5EFFE"}}}>
-  <Image src={`/github.svg`} sx={{"height": "3em", "padding": "0.5em"}}/>
-</Center>
-</Link>
+  <Flex sx={{"alignItems": "center", "transition": "left 0.5s, width 0.5s"}}>
+  <Flex sx={{"position": "fixed", "width": "100%", "top": "0px", "zIndex": "5"}}>
+  <HStack sx={{"padding": "1em"}}>
+  <Text sx={{"padding": "0 8px", "fontWeight": "bold", "fontSize": "2em", "border": "1px solid #F4F3F6", "borderRadius": "0.375rem", "backgroundColor": "#F4F3F6", "_hover": {}}}>
+  {`StudBud`}
+</Text>
 </HStack>
-  <VStack alignItems={`flex-start`} sx={{"width": "100%", "overflowY": "auto", "padding": "1em"}}>
-  <Link as={NextLink} href={`/`} sx={{"width": "100%"}}>
-  <HStack sx={{"bg": isTrue((state.router.page.path === "/home") || (((state.router.page.path === "/") && "Home") === "Home")) ? `#F5EFFE` : `transparent`, "color": isTrue((state.router.page.path === "/home") || (((state.router.page.path === "/") && "Home") === "Home")) ? `#1A1060` : `black`, "borderRadius": "0.375rem", "boxShadow": "0px 0px 0px 1px rgba(84, 82, 95, 0.14)", "width": "100%", "paddingX": "1em"}}>
+  <Flex align={`center`}>
+  <Link as={``}>
+  <Flex align={`center`} justify={`center`} sx={{"bg": isTrue((state.router.page.path === "/home") || (((state.router.page.path === "/") && "Home") === "Home")) ? `#F5EFFE` : `white`, "color": isTrue((state.router.page.path === "/home") || (((state.router.page.path === "/") && "Home") === "Home")) ? `#1A1060` : `black`, "borderRadius": "0.375rem", "boxShadow": "0px 0px 0px 1px rgba(84, 82, 95, 0.14)", "width": "100%", "paddingX": "1em"}}>
   <Image src={`/github.svg`} sx={{"height": "2.5em", "padding": "0.5em"}}/>
+  <Flex sx={{"paddingRight": "6px"}}>
   <Text>
   {`Home`}
 </Text>
-</HStack>
+</Flex>
+</Flex>
+  <Flex sx={{"href": "/", "width": "12%"}}/>
 </Link>
-  <Link as={NextLink} href={`/dashboard`} sx={{"width": "100%"}}>
-  <HStack sx={{"bg": isTrue((state.router.page.path === "/dashboard") || (((state.router.page.path === "/") && "Dashboard") === "Home")) ? `#F5EFFE` : `transparent`, "color": isTrue((state.router.page.path === "/dashboard") || (((state.router.page.path === "/") && "Dashboard") === "Home")) ? `#1A1060` : `black`, "borderRadius": "0.375rem", "boxShadow": "0px 0px 0px 1px rgba(84, 82, 95, 0.14)", "width": "100%", "paddingX": "1em"}}>
+  <Link as={``}>
+  <Flex align={`center`} justify={`center`} sx={{"bg": isTrue((state.router.page.path === "/dashboard") || (((state.router.page.path === "/") && "Dashboard") === "Home")) ? `#F5EFFE` : `white`, "color": isTrue((state.router.page.path === "/dashboard") || (((state.router.page.path === "/") && "Dashboard") === "Home")) ? `#1A1060` : `black`, "borderRadius": "0.375rem", "boxShadow": "0px 0px 0px 1px rgba(84, 82, 95, 0.14)", "width": "100%", "paddingX": "1em"}}>
   <Image src={`/github.svg`} sx={{"height": "2.5em", "padding": "0.5em"}}/>
+  <Flex sx={{"paddingRight": "6px"}}>
   <Text>
   {`Dashboard`}
 </Text>
-</HStack>
+</Flex>
+</Flex>
+  <Flex sx={{"href": "/dashboard", "width": "12%"}}/>
 </Link>
-  <Link as={NextLink} href={`/settings`} sx={{"width": "100%"}}>
-  <HStack sx={{"bg": isTrue((state.router.page.path === "/settings") || (((state.router.page.path === "/") && "Settings") === "Home")) ? `#F5EFFE` : `transparent`, "color": isTrue((state.router.page.path === "/settings") || (((state.router.page.path === "/") && "Settings") === "Home")) ? `#1A1060` : `black`, "borderRadius": "0.375rem", "boxShadow": "0px 0px 0px 1px rgba(84, 82, 95, 0.14)", "width": "100%", "paddingX": "1em"}}>
+  <Link as={``}>
+  <Flex align={`center`} justify={`center`} sx={{"bg": isTrue((state.router.page.path === "/settings") || (((state.router.page.path === "/") && "Settings") === "Home")) ? `#F5EFFE` : `white`, "color": isTrue((state.router.page.path === "/settings") || (((state.router.page.path === "/") && "Settings") === "Home")) ? `#1A1060` : `black`, "borderRadius": "0.375rem", "boxShadow": "0px 0px 0px 1px rgba(84, 82, 95, 0.14)", "width": "100%", "paddingX": "1em"}}>
   <Image src={`/github.svg`} sx={{"height": "2.5em", "padding": "0.5em"}}/>
+  <Flex sx={{"paddingRight": "6px"}}>
   <Text>
   {`Settings`}
 </Text>
-</HStack>
+</Flex>
+</Flex>
+  <Flex sx={{"href": "/settings", "width": "12%"}}/>
 </Link>
-</VStack>
-  <Spacer/>
-  <HStack sx={{"width": "100%", "borderTop": "1px solid #F4F3F6", "padding": "1em"}}>
-  <Spacer/>
-  <Link as={NextLink} href={`https://reflex.dev/docs/getting-started/introduction/`}>
-  <Text>
-  {`Docs`}
-</Text>
-</Link>
-  <Link as={NextLink} href={`https://reflex.dev/blog/`}>
-  <Text>
-  {`Blog`}
-</Text>
-</Link>
-</HStack>
-</VStack>
-</Box>
+</Flex>
+</Flex>
   <Box sx={{"paddingTop": "5em", "paddingX": ["auto", "2em"]}}>
   <Box sx={{"width": "100%", "alignItems": "flex-start", "boxShadow": "0px 0px 0px 1px rgba(84, 82, 95, 0.14)", "borderRadius": "0.375rem", "padding": "1em", "marginBottom": "2em"}}>
   <ReactMarkdown components={{"h1": ({children, ...props}) => <Heading as={`h1`} size={`2xl`} sx={{"marginY": "0.5em"}} {...props}>   {children} </Heading>, "h2": ({children, ...props}) => <Heading as={`h2`} size={`xl`} sx={{"marginY": "0.5em"}} {...props}>   {children} </Heading>, "h3": ({children, ...props}) => <Heading as={`h3`} size={`lg`} sx={{"marginY": "0.5em"}} {...props}>   {children} </Heading>, "h4": ({children, ...props}) => <Heading as={`h4`} size={`md`} sx={{"marginY": "0.5em"}} {...props}>   {children} </Heading>, "h5": ({children, ...props}) => <Heading as={`h5`} size={`sm`} sx={{"marginY": "0.5em"}} {...props}>   {children} </Heading>, "h6": ({children, ...props}) => <Heading as={`h6`} size={`xs`} sx={{"marginY": "0.5em"}} {...props}>   {children} </Heading>, "p": ({children, ...props}) => <Text sx={{"marginY": "1em"}} {...props}>   {children} </Text>, "ul": ({children, ...props}) => <UnorderedList sx={{"marginY": "1em"}} {...props}>   {children} </UnorderedList>, "ol": ({children, ...props}) => <OrderedList sx={{"marginY": "1em"}} {...props}>   {children} </OrderedList>, "li": ({children, ...props}) => <ListItem sx={{"marginY": "0.5em"}} {...props}>   {children} </ListItem>, "a": ({children, ...props}) => <Link as={``} sx={{"fontWeight": "bold", "color": "#03030B", "textDecoration": "underline", "textDecorationColor": "#AD9BF8", "_hover": {"color": "#AD9BF8", "textDecoration": "underline", "textDecorationColor": "#03030B"}}} {...props}>   {children} </Link>, "code": ({inline, className, children, ...props}) => {     const match = (className || '').match(/language-(?<lang>.*)/);     const language = match ? match[1] : '';     return inline ? (         <Code sx={{"color": "#1F1944", "bg": "#EAE4FD"}} {...props}>   {children} </Code>     ) : (         <Prism customStyle={{"marginY": "1em"}} language={language} style={light} sx={{"marginY": "1em"}} {...props} children={String(children)}/>     );       }, "codeblock": ({children, ...props}) => <Prism customStyle={{"marginY": "1em"}} style={light} sx={{"marginY": "1em"}} {...props}/>}} rehypePlugins={[rehypeKatex, rehypeRaw]} remarkPlugins={[remarkMath, remarkGfm]}>
@@ -260,7 +249,7 @@ specific to a page, you can define it in the page file itself.
 </MenuList>
 </Menu>
 </Box>
-</HStack>
+</Flex>
   <NextHead>
   <title>
   {`Home`}

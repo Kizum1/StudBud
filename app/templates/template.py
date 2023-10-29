@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from app import styles
-from app.components.sidebar import sidebar
+from app.components.navbar import navbar
 from typing import Callable
 
 import reflex as rx
@@ -107,8 +107,8 @@ def template(
             on_load=on_load,
         )
         def templated_page():
-            return rx.hstack(
-                sidebar(),
+            return rx.flex(
+                navbar(),
                 rx.box(
                     rx.box(
                         page_content(),
@@ -118,9 +118,8 @@ def template(
                 ),
                 rx.spacer(),
                 menu_button(),
-                align_items="flex-start",
+                align_items="center",
                 transition="left 0.5s, width 0.5s",
-                position="relative",
             )
 
         return templated_page
